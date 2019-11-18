@@ -1,2 +1,0 @@
-# Collatz-Conjecture
-# Collatz-Conjecture
