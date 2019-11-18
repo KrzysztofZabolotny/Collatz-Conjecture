@@ -2,14 +2,14 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-public class CollatzConjecture {
+public class Main {
 
     public static void main(String[] args) throws Exception {
 
         checkSteps();
     }
 
-    static CollatzNumber collatz(CollatzNumber c){
+    private static void collatz(CollatzNumber c){
 
         int multiplication = 0;
         int division = 0;
@@ -39,10 +39,8 @@ public class CollatzConjecture {
             }
         }
         c.setStep(step);
-
-        return c;
     }
-    static void checkSteps() throws Exception{
+    private static void checkSteps() throws Exception{
 
         Scanner in = new Scanner(System.in);
         System.out.println("Enter the number of steps");
@@ -50,26 +48,20 @@ public class CollatzConjecture {
         System.out.println("Enter the start number");
         int startNumber= in.nextInt();
         CollatzNumber c = new CollatzNumber(startNumber);
-        PrintWriter write = null;
-        try {
-            write = new PrintWriter(new FileWriter("numbers.txt", false));
+        try (PrintWriter write = new PrintWriter(new FileWriter("numbers.txt", false))) {
             int tmp = 0;
-            while(c.getMaxStep()<maxStep){
+            while (c.getMaxStep() < maxStep) {
                 collatz(c);
-                if(c.getMaxStep()>tmp) {
+                if (c.getMaxStep() > tmp) {
                     write.println(c);
                     write.println("____________________________________________________________________________________");
                     write.println();
                     tmp = c.getMaxStep();
                     write.flush();
                 }
-                c.setNumber(c.getNumber()+1);
+                c.setNumber(c.getNumber() + 1);
             }
-        }finally {
-            if(write!=null) write.close();
         }
 
     }
-
-
 }
